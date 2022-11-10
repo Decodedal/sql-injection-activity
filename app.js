@@ -1,30 +1,41 @@
-const bodyParser = require('body-parser')
-const http = require('http')
-const path = require('path')
-const express = require('express')
-const sqlite3 = require('sqlite3').verbose()
-const app = express()
+const { read } = require('fs');
+const http = require('http'),
+path=require('path'),
+express =require('express'),
+bodyParser=require('body-parser');
+const sqlite3 =require('sqlite3').verbose();
+const app = express();
+
 app.use(express.static('.'))
-app.use(bodyParser.urlencoded({extend:true}))
+app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json())
 
 
-const db = new sqlite3.Database(":memory");
-db.serialize(function (){
-    db.run("CREATE TABLE user (username TEXT, password TEXT, title TEXT)");
-    db.run("INSERT INTO user VALUES ('privilegedUser', 'privilegedUser1', 'Administrator')");
+
+
+const db = new sqlite3.Database(':memory:');
+db.serialize(function () {
+ db.run("CREATE TABLE user (username TEXT, password TEXT, title TEXT)");
+ db.run("INSERT INTO user VALUES ('privilegedUser', 'privilegedUser1', 'Administrator')");
+ db.run("INSERT INTO user VALUES ('Dallas', '123', 'Administrator')");
 });
+
 
 app.get('/', (req,res)=>{
     res.sendFile("index.html")
 })
 
-app.post('/login', async (req,res)=>{
+app.post('/login',(req,res)=>{
 try{
-    const userName = await req.body.username
-    const passWord = await req.body.password
-    const query = ` SELECT title FROM user WHERE username = ${userName} AND password = ${passWord}`
-    console.log(userName, passWord , query)
+    const userName = req.body.username
+    const passWord = req.body.password
+    const query = "SELECT title FROM user where username = '" + userName + "' and password = '" + passWord + "'";
+
+    
+    
+	console.log("username: " + userName);
+	console.log("password: " + passWord);
+	console.log('query: ' + query);
 
         db.get(query, function (err, row) {
 	if (err) {
