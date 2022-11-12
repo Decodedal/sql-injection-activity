@@ -15,5 +15,14 @@
     "express": "^4.18.2",
     "nodemon": "^2.0.20",
     "sqlite3": "^5.1.2"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Decodedal/sql-injection-activity.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Decodedal/sql-injection-activity/issues"
+  },
+  "homepage": "https://github.com/Decodedal/sql-injection-activity#readme"
 }

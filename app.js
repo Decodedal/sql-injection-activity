@@ -29,7 +29,7 @@ app.post('/login',(req,res)=>{
 try{
     const userName = req.body.username
     const passWord = req.body.password
-    const query = `SELECT title FROM user where username = "${userName}" AND password = "${passWord}" `;
+    const query = "SELECT title FROM user where username = '" + userName + "' and password = '" + passWord + "'";
 
     
     
